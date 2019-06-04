@@ -1,17 +1,37 @@
 import React, { Component } from "react";
-import "./HelloWorld.css";
+import Table from "react-bootstrap/Table";
 
-class TrackingTable extends Component {
+class TrackingLine extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      greeting: "Hola"
+      eventID: this.props.eventID,
+      eventTime: this.props.eventTime,
+      temperature: this.props.temperature,
+      humidity: this.props.humidity,
+      latitude: this.props.latitude,
+      northSouth: this.props.isNorth ? "N" : "S",
+      longitude: this.props.longitude,
+      eastWest: this.props.isWest ? "W" : "E"
     };
-    this.frenchify = this.frenchify.bind(this);
   }
-  frenchify() {
-    this.setState({ greeting: "Bonjour" });
+
+  render() {
+    return (
+      <tr>
+        <th scope="row">{this.state.eventID}</th>
+        <td>{this.state.eventTime}</td>
+        <td>{this.state.temperature}</td>
+        <td>{this.state.humidity}</td>
+        <td>{this.state.latitude}</td>
+        <td>{this.state.northSouth}</td>
+        <td>{this.state.longitude}</td>
+        <td>{this.state.eastWest}</td>
+      </tr>
+    );
   }
+}
+/*
   render() {
     return (
       <div className="HelloWorld">
@@ -22,5 +42,6 @@ class TrackingTable extends Component {
     );
   }
 }
+*/
 
-export default HelloWorld;
+export default TrackingLine;

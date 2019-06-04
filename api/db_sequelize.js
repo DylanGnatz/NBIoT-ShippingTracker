@@ -70,15 +70,15 @@ const TrackingEvent = sequelize.define(
 function addEvent(EID, ET, SIM, temp, hum, lat, IN, long, IW) {
   TrackingEvent.sync({ force: true }).then(() => {
     TrackingEvent.create({
-      EventID: EID,
-      EventTime: ET,
+      eventID: EID,
+      eventTime: ET,
       SIMID: SIM,
-      Temperature: temp,
-      Humidity: hum,
-      Latitude: lat,
-      IsNorth: IN,
-      Longitude: long,
-      IsWest: IW
+      temperature: temp,
+      humidity: hum,
+      latitude: lat,
+      isNorth: IN,
+      longitude: long,
+      isWest: IW
     });
   });
 }
