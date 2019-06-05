@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Button from "react-bootstrap/Button";
 import Popover from "react-bootstrap/Popover";
+import MapView from "./MapView";
+import Container from "react-bootstrap/Container";
+import "./App.css";
 
 class TrackingLine extends Component {
   constructor(props) {
@@ -30,37 +33,22 @@ class TrackingLine extends Component {
         <td>{this.state.northSouth}</td>
         <td>{this.state.longitude}</td>
         <td>{this.state.eastWest}</td>
-        <td>
-          <MapsPopout />
-        </td>
+        <td>{MapsPopout(this.state.latitude, this.state.longitude)}</td>
       </tr>
     );
   }
 }
 
-const MapsPopout = () => (
-  <OverlayTrigger trigger="click" placement="top" overlay={popover}>
+const MapsPopout = (lat, lng) => (
+  <OverlayTrigger trigger="click" placement="left" overlay={popover(lat, lng)}>
     <Button variant="success">Map</Button>
   </OverlayTrigger>
 );
 
-const popover = (
-  <Popover id="popover-basic" title="Popover right">
-    And here's some <strong>amazing</strong> content. It's very engaging. right?
+const popover = (lat, lng) => (
+  <Popover id="popover-basic" title="Tracking Location">
+    <MapView latitude={lat} longitude={lng} />
   </Popover>
 );
-
-/*
-  render() {
-    return (
-      <div className="HelloWorld">
-        {this.state.greeting} {this.props.name}!
-        <br />
-        <button onClick={this.frenchify}>Frenchify!</button>
-      </div>
-    );
-  }
-}
-*/
 
 export default TrackingLine;

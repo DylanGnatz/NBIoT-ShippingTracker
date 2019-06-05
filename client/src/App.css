@@ -31,3 +31,8 @@
     transform: rotate(360deg);
   }
 }
+.popover {
+  max-width: 150%;
+  width: 800px;
+  height: 400px;
+}

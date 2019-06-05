@@ -9,6 +9,7 @@ import Col from "react-bootstrap/Col";
 import TrackingForm from "./TrackingForm";
 import TrackingTable from "./TrackingTable";
 import HelloWorld from "./HelloWorld";
+import MapView from "./MapView";
 
 class App extends Component {
   constructor(props) {
@@ -75,6 +76,7 @@ class App extends Component {
 export default App;
 
 /*
+<MapView latitude={-1.2884} longitude={36.8233} />
 
 <input
               type="text"

@@ -33,6 +33,7 @@ class TrackingTable extends Component {
             <th scope="col">North/South</th>
             <th scope="col">Longitude</th>
             <th scope="col">East/West</th>
+            <th scope="col">View Map</th>
           </tr>
         </thead>
         <tbody>
