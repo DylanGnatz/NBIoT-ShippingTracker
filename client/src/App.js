@@ -4,6 +4,8 @@ import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import TrackingForm from "./TrackingForm";
 import TrackingTable from "./TrackingTable";
 import HelloWorld from "./HelloWorld";
@@ -32,28 +34,39 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <br />
-        <h1>Welcome to the NB-IoT ShipTracker!</h1>
+        <Container-Fluid>
+          <Row>
+            <Col />
+            <Col>
+              <br />
+              <h1>Welcome to the NB-IoT ShipTracker!</h1>
 
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Group
-            controlId="formSIMID"
-            value={this.state.value}
-            onChange={this.handleChange}
-          >
-            <Form.Label>SIM ID</Form.Label>
-            <Form.Control placeholder="Enter your SIM ID to track your package" />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-        </Form>
-        {this.state.submitted ? (
-          <div>
-            <h1> Tracking Data for SIM {this.state.SIMID} </h1>
-            <TrackingTable SIMID={this.state.SIMID} />
-          </div>
-        ) : null}
+              <Form onSubmit={this.handleSubmit}>
+                <Form.Group
+                  controlId="formSIMID"
+                  value={this.state.value}
+                  onChange={this.handleChange}
+                >
+                  <Form.Label>
+                    Please enter your SIM ID below to track your shipment:
+                  </Form.Label>
+                  <Form.Control placeholder="SIM ID" />
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                  Track
+                </Button>
+              </Form>
+            </Col>
+            <Col />
+          </Row>
+          <br />
+          {this.state.submitted ? (
+            <div>
+              <h1> Tracking Data for SIM {this.state.SIMID} </h1>
+              <TrackingTable SIMID={this.state.SIMID} />
+            </div>
+          ) : null}
+        </Container-Fluid>
       </div>
     );
   }

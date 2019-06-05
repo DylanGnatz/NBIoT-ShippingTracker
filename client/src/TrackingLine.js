@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import Table from "react-bootstrap/Table";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Button from "react-bootstrap/Button";
+import Popover from "react-bootstrap/Popover";
 
 class TrackingLine extends Component {
   constructor(props) {
@@ -12,7 +14,8 @@ class TrackingLine extends Component {
       latitude: this.props.latitude,
       northSouth: this.props.isNorth ? "N" : "S",
       longitude: this.props.longitude,
-      eastWest: this.props.isWest ? "W" : "E"
+      eastWest: this.props.isWest ? "W" : "E",
+      showMap: false
     };
   }
 
@@ -27,10 +30,26 @@ class TrackingLine extends Component {
         <td>{this.state.northSouth}</td>
         <td>{this.state.longitude}</td>
         <td>{this.state.eastWest}</td>
+        <td>
+          <MapsPopout />
+        </td>
       </tr>
     );
   }
 }
+
+const MapsPopout = () => (
+  <OverlayTrigger trigger="click" placement="top" overlay={popover}>
+    <Button variant="success">Map</Button>
+  </OverlayTrigger>
+);
+
+const popover = (
+  <Popover id="popover-basic" title="Popover right">
+    And here's some <strong>amazing</strong> content. It's very engaging. right?
+  </Popover>
+);
+
 /*
   render() {
     return (
