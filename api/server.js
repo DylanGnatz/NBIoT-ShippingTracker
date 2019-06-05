@@ -19,7 +19,7 @@ app.post("/fromSIM", function(req, res) {
   let command = req.body.Command;
   let commandF = helpers.parseString(command);
   obj = JSON.parse(commandF);
-
+  console.log(obj);
   let EID = uuid.v1();
   let timestamp = helpers.getDateTimeString();
   let SIM = req.body.SimSid;

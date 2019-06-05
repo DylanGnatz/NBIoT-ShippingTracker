@@ -2,11 +2,11 @@ const tedious = require("tedious");
 const Sequelize = require("sequelize");
 
 //DB Connection info
-const DB_UNAME = "xxxxx";
-const DB_PASS = "xxxxx";
-const DB_SERV = "xxxxx";
-const DB_NAME = "xxxxx";
-const TABLE_NAME = "xxxxx";
+const DB_UNAME = "gnatzd";
+const DB_PASS = "1023323Dlwg!";
+const DB_SERV = "shipping-tracker.database.windows.net";
+const DB_NAME = "shipping-tracker-db";
+const TABLE_NAME = "dbo.TrackingEvents";
 
 const sequelize = new Sequelize(DB_NAME, DB_UNAME, DB_PASS, {
   host: DB_SERV,
@@ -68,17 +68,17 @@ const TrackingEvent = sequelize.define(
 );
 
 function addEvent(EID, ET, SIM, temp, hum, lat, IN, long, IW) {
-  TrackingEvent.sync({ force: true }).then(() => {
+  TrackingEvent.sync({}).then(() => {
     TrackingEvent.create({
-      eventID: EID,
-      eventTime: ET,
+      EventID: EID,
+      EventTime: ET,
       SIMID: SIM,
-      temperature: temp,
-      humidity: hum,
-      latitude: lat,
-      isNorth: IN,
-      longitude: long,
-      isWest: IW
+      Temperature: temp,
+      Humidity: hum,
+      Latitude: lat,
+      IsNorth: IN,
+      Longitude: long,
+      IsWest: IW
     });
   });
 }
@@ -87,7 +87,8 @@ function getEventsBySIM(SIM) {
   return TrackingEvent.findAll({
     where: {
       SIMID: SIM
-    }
+    },
+    order: [["updatedAt", "DESC"]]
   });
 }
 
