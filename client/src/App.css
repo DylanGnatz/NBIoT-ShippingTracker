@@ -1,6 +1,9 @@
 .App {
   text-align: center;
 }
+body {
+  background-color: lightblue;
+}
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -31,8 +34,15 @@
     transform: rotate(360deg);
   }
 }
+.popover-inner {
+  margin: 0px 0px 0px 0px;
+  width: 600px !important;
+  max-width: 600px !important;
+  height: 600px;
+}
 .popover {
-  max-width: 150%;
-  width: 800px;
-  height: 400px;
+  margin: 0px 0px 0px 0px;
+  width: 600px !important;
+  max-width: 600px !important;
+  height: 600px;
 }

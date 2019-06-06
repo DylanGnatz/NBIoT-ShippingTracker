@@ -40,9 +40,15 @@ class TrackingLine extends Component {
 }
 
 const MapsPopout = (lat, lng) => (
-  <OverlayTrigger trigger="click" placement="left" overlay={popover(lat, lng)}>
-    <Button variant="success">Map</Button>
-  </OverlayTrigger>
+  <div className="maps-popout">
+    <OverlayTrigger
+      trigger="click"
+      placement="left"
+      overlay={popover(lat, lng)}
+    >
+      <Button variant="success">Map</Button>
+    </OverlayTrigger>
+  </div>
 );
 
 const popover = (lat, lng) => (

@@ -35,6 +35,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <body class="bg-light" />;
         <Container-Fluid>
           <Row>
             <Col />

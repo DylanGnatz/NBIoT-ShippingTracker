@@ -56,8 +56,6 @@ app.get("/getEvents/:SIM", function(req, res) {
   });
 });
 
-const PORT = 5000;
-
-app.listen(PORT, () => {
-  console.log(`server running on port ${PORT}`);
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`server running on port 3000`);
 });

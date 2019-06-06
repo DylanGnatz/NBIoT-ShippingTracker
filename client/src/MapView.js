@@ -6,7 +6,7 @@ const mapStyles = {
   height: "100%"
 };
 
-const API_KEY = "xxxxxxxxxxxxxxxx";
+const API_KEY = "xxxxxxxx";
 
 export class MapView extends Component {
   constructor(props) {
