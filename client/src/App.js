@@ -10,6 +10,7 @@ import TrackingForm from "./TrackingForm";
 import TrackingTable from "./TrackingTable";
 import HelloWorld from "./HelloWorld";
 import MapView from "./MapView";
+import Helmet from "react-helmet";
 
 class App extends Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <body class="bg-light" />;
+        <Helmet bodyAttributes={{ style: "background-color : #42f4e2" }} />
         <Container-Fluid>
           <Row>
             <Col />
@@ -54,7 +55,7 @@ class App extends Component {
                   </Form.Label>
                   <Form.Control placeholder="SIM ID" />
                 </Form.Group>
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" size="lg">
                   Track
                 </Button>
               </Form>
