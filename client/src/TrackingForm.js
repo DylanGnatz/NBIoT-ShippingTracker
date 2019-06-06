@@ -14,10 +14,6 @@ class TrackingForm extends React.Component {
   }
   handleSubmit(event) {
     alert("A name was submitted: " + this.state.value);
-    axios
-      .get("http://localhost:3000/getEvents/" + this.state.value)
-      .then(response => console.log(response));
-    event.preventDefault();
   }
 
   render() {

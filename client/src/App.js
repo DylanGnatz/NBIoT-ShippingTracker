@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import "./App.css";
-import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import TrackingForm from "./TrackingForm";
 import TrackingTable from "./TrackingTable";
-import HelloWorld from "./HelloWorld";
-import MapView from "./MapView";
+import GraphView from "./GraphView";
 import Helmet from "react-helmet";
 
 class App extends Component {
@@ -67,6 +64,7 @@ class App extends Component {
             <div>
               <h1> Tracking Data for SIM {this.state.SIMID} </h1>
               <TrackingTable SIMID={this.state.SIMID} />
+              <GraphView SIMID={this.state.SIMID} />
             </div>
           ) : null}
         </Container-Fluid>
@@ -78,6 +76,7 @@ class App extends Component {
 export default App;
 
 /*
+
 <MapView latitude={-1.2884} longitude={36.8233} />
 
 <input
