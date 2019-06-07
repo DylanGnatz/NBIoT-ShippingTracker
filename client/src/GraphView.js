@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { XYPlot, LineSeries } from "react-vis";
-import Graph from "./Graph";
+import Chart from "./Chart";
 import axios from "axios";
 
 class GraphView extends Component {
@@ -24,7 +24,7 @@ class GraphView extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.renderGraph ? <Graph data={this.state.events} /> : null}
+        {this.state.renderGraph ? <Chart data={this.state.events} /> : null}
       </div>
     );
   }

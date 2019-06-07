@@ -24,8 +24,8 @@ class Graph extends Component {
       return { x: data.EventTime, y: data.Temperature };
     });
     console.log(dataArr);
-    this.setState({ plot: dataArr });
-    console.log(this.state.plot);
+    this.setState({ data: dataArr });
+    console.log(this.state.data);
   }
 
   render() {
