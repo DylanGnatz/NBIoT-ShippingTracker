@@ -8,7 +8,6 @@ const DB_SERV = "xxxxx";
 const DB_NAME = "xxxxx";
 const TABLE_NAME = "xxxxx";
 
-
 const sequelize = new Sequelize(DB_NAME, DB_UNAME, DB_PASS, {
   host: DB_SERV,
   dialect: "mssql",
