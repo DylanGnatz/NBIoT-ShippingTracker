@@ -41,7 +41,13 @@ To demonstrate this concept, let's build our own full-stack prototype of a NB-Io
 
 ## 1. Configure the DevKit and Arduino IDE
 
+For a detailed tutorial on how to setup your NB-IoT DevKit and Arduino environment , check out [this guide](https://www.twilio.com/blog/pioneer-nb-iot-with-twilios-alfa-development-kit)
+
+Remove the components from your DevKit. Attach the lithium battery, temperature/humidity sensor, LTE antenna, GPS antenna, and micro USB cable to the board.
+
 ## 2. Register the narrowband SIM with Twilio
+
+Pop out the T-Mobile Narrowband Nano SIM (the smallest size), from the SIM card. Log in to Twilio and [register the SIM Card](https://www.twilio.com/console/wireless/sims/register) with the registration code located on the back of the card. Pop the nano SIM into SIM slot on the DevKit board.
 
 ## 3. Create and upload the Breakout sketch to the DevKit
 
