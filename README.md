@@ -13,3 +13,28 @@ To demonstrate this concept, let's build our own full-stack prototype of a NB-Io
 - Deploy our client and server to Azure
 
 ## Requirements
+
+### Hardware
+
+- [Twilio DevKit for T-Mobile Narrowband](https://www.twilio.com/docs/wireless/quickstart/alfa-developer-kit) including:
+  - [Twilio Narrowband SIM](https://www.twilio.com/wireless/narrowband)
+  - Alfa developer board
+  - LTE antenna
+  - GPS antenna
+  - Grove temperature/humidity sensor
+  - Micro-usb cable
+  - Lithium battery
+
+### Software
+
+- [Arduino IDE](https://www.arduino.cc/en/Main/Software)
+- [Twilio Breakout SDK](https://github.com/twilio/Breakout_Arduino_Library/tree/master/src/BreakoutSDK)
+- [Visual Studio Code](https://code.visualstudio.com/) (for convenient deployment to Azure)
+- [Node.js](https://nodejs.org/en/)
+- [React](https://reactjs.org/)
+
+### Accounts
+
+- [Twilio](https://www.twilio.com/)
+- [Microsoft Azure Trial Account](https://azure.microsoft.com/en-us/) (includes \$200 of free credit)
+- [Google Developer Account](https://developers.google.com/) (for access to the Google Maps API)
