@@ -38,3 +38,25 @@ To demonstrate this concept, let's build our own full-stack prototype of a NB-Io
 - [Twilio](https://www.twilio.com/)
 - [Microsoft Azure Trial Account](https://azure.microsoft.com/en-us/) (includes \$200 of free credit)
 - [Google Developer Account](https://developers.google.com/) (for access to the Google Maps API)
+
+## 1. Configure the DevKit and Arduino IDE
+
+## 2. Register the narrowband SIM with Twilio
+
+## 3. Create and upload the Breakout sketch to the DevKit
+
+## 4. Deploy a MSSQL cloud database to Azure
+
+## 5. Create a database schema for storing the device commands
+
+## 6. Use Sequelize to build insert/update functions for database interface
+
+## 7. Write a back-end server API with Node and Express to accept HTTP requests from the client and Twilio webhooks
+
+## 8. Build a web app for accessing tracking data using create-react-app
+
+## 9. Add Google Maps API integration to provide map view of GPS location
+
+## 10. Deploy server to Azure
+
+## 11. Deploy Client to Azure
