@@ -8,6 +8,8 @@ To demonstrate this concept, let's build our own full-stack prototype of a NB-Io
 - Transmit commands to Twilio via the T-Mobile Narrowband network.
 - Deploy a relational database to the cloud with Azure SQL
 - Create a back-end API with Node.js and Express to accept commands from our DevKit and serve requests from our client for data from the database.
+- Send our tracker data to the server via webhooks from Twilio
 - Create a front-end web app with React to allow our end-user to access tracking data.
+- Deploy our client and server to Azure
 
 ## Requirements
