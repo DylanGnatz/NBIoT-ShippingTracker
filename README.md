@@ -51,11 +51,11 @@ To demonstrate this concept, let's build our own full-stack prototype of a NB-Io
 
 ## 6. Use Sequelize to build insert/update functions for database interface
 
-## 7. Write a back-end server API with Node and Express to accept HTTP requests from the client and Twilio webhooks
+## 7. Write a back-end server API with Node and Express
 
-## 8. Build a web app for accessing tracking data using create-react-app
+## 8. Build a front-end web app using create-react-app
 
-## 9. Add Google Maps API integration to provide map view of GPS location
+## 9. Add Google Maps API integration
 
 ## 10. Deploy server to Azure
 
