@@ -655,6 +655,60 @@ app.listen(process.env.PORT || 3000, () => {
 });
 ```
 
+As you can see, our API services two types of HTTP request
+
+- /fromSIM POST requests
+  - Accepts webhooks from Twilio that include tracking data, parses the body, and inserts the data as a new TrackingEvent using our Sequelize functions.
+- /getEvents GET requests
+  - Services requests from the client for a full list of TrackingEvents associated with a SIM ID.
+
+Finally, we need to build a couple of helper functions to parse and format our data. Here is the helpers.js code:
+
+```JavaScript
+function getDateTimeString() {
+  const date = new Date();
+  return (
+    date.getFullYear() +
+    "-" +
+    (date.getMonth() + 1).toString().padStart(2, "0") +
+    "-" +
+    date
+      .getDate()
+      .toString()
+      .padStart(2, "0") +
+    ":" +
+    date
+      .getHours()
+      .toString()
+      .padStart(2, "0") +
+    ":" +
+    date
+      .getMinutes()
+      .toString()
+      .padStart(2, "0") +
+    ":" +
+    date
+      .getSeconds()
+      .toString()
+      .padStart(2, "0")
+  );
+}
+
+function parseString(inStr) {
+  outStr = inStr.replace(/>/g, '"');
+  outStr = outStr.replace(/</g, '"');
+  return outStr;
+}
+
+function convToDD(deg, min) {
+  return deg + min / 60;
+}
+
+module.exports.getDateTimeString = getDateTimeString;
+module.exports.parseString = parseString;
+module.exports.convToDD = convToDD;
+```
+
 ## 8. Build a front-end web app using create-react-app
 
 ## 9. Add Google Maps API integration
