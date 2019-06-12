@@ -328,6 +328,56 @@ Since we are only building a prototype, we can configure the database to use min
 
 ## 5. Create a database schema for storing the device commands
 
+Before we create our back-end API, let's begin creating functions to interface with our database that our Express app will call to insert and query data. First, though, we need to create our overall structure of our project. Create a folder that will hold your back-end files, and call it "API." Navigate to the folder in your terminal and type "npm init" to create a new Node project.
+
+We will use an ORM called [Sequelize](http://docs.sequelizejs.com/) to work with our database.
+
+In your Node project, install Sequelize by using the command:
+
+```
+npm install --save sequelize
+```
+
+Now we can get started working with our Azure SQL database. We'll start with a few lines that declare our connection information to Sequelize. Replace the DB connection info variables with the ones unique to your Azure database.
+
+```JavaScript
+const Sequelize = require("sequelize");
+
+//DB Connection info
+const DB_UNAME = "xxxxx";
+const DB_PASS = "xxxxx";
+const DB_SERV = "xxxxx";
+const DB_NAME = "xxxxx";
+
+const sequelize = new Sequelize(DB_NAME, DB_UNAME, DB_PASS, {
+  host: DB_SERV,
+  dialect: "mssql",
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
+  },
+  dialectOptions: {
+    options: {
+      encrypt: true
+    }
+  }
+});
+```
+
+Next, to establish the connection with the database:
+
+```JavaScript
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Connection has been established successfully.");
+  })
+  .catch(err => {
+    console.error("Unable to connect to the database:", err);
+  });
+```
+
 ## 6. Use Sequelize to build insert/update functions for database interface
 
 ## 7. Write a back-end server API with Node and Express
