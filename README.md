@@ -61,6 +61,235 @@ Pop out the T-Mobile Narrowband Nano SIM (the smallest size), from the SIM card.
 
 ## 3. Create and upload the Breakout sketch to the DevKit
 
+The Breakout SDK offers several example sketches for getting started with the various sensors (File -> Examples -> Breakout Arduino Library -> Sensors). We'll use the Temperature/Humidity example as our template and modify it according to our needs:
+
+```C++
+#include <DHT.h>
+
+#include <board.h>
+#include <BreakoutSDK.h>
+#include <stdio.h>
+//https://github.com/Seeed-Studio/Grove_Temperature_And_Humidity_Sensor
+#include <DHT.h>
+
+/** Change this to your device purpose */
+static const char *device_purpose = "Dev-Kit";
+/** Change this to your key for the SIM card inserted in this device
+ *  You can find your PSK under the Breakout SDK tab of your Narrowband SIM detail at
+ *  https://www.twilio.com/console/wireless/sims
+*/
+static const char *psk_key = "00112233445566778899aabbccddeeff";
+
+/** This is the Breakout SDK top API */
+Breakout *breakout = &Breakout::getInstance();
+
+#define SENSOR_PIN (D38)
+#define LOOP_INTERVAL (1 * 1000)
+#define SEND_INTERVAL (10 * 60 * 1000)
+#define DHTTYPE DHT11   // DHT 11
+
+DHT dht(SENSOR_PIN, DHTTYPE);
+
+void setup() {
+  dht.begin();
+  // Feel free to change the log verbosity. E.g. from most critical to most verbose:
+  //   - errors: L_ALERT, L_CRIT, L_ERR, L_ISSUE
+  //   - warnings: L_WARN, L_NOTICE
+  //   - information & debug: L_INFO, L_DB, L_DBG, L_MEM
+  // When logging, the additional L_CLI level ensure that the output will always be visible, no matter the set level.
+  owl_log_set_level(L_INFO);
+  LOG(L_WARN, "Arduino setup() starting up\r\n");
+
+  // Set the Breakout SDK parameters
+  breakout->setPurpose(device_purpose);
+  breakout->setPSKKey(psk_key);
+  breakout->setPollingInterval(10 * 60);  // Optional, by default set to 10 minutes
+
+  // Powering the modem and starting up the SDK
+  LOG(L_WARN, "Powering on module and registering...");
+  breakout->powerModuleOn();
+
+  LOG(L_WARN, "... done powering on and registering.\r\n");
+  LOG(L_WARN, "Arduino loop() starting up\r\n");
+}
+
+/**
+ * This is just a simple example to send a command and write out the status to the console.
+ */
+
+void sendCommand(const char * command) {
+  if (breakout->sendTextCommand(command) == COMMAND_STATUS_OK) {
+    LOG(L_INFO, "Tx-Command [%s]\r\n", command);
+  } else {
+    LOG(L_INFO, "Tx-Command ERROR\r\n");
+  }
+}
+
+void loop()
+{
+  static unsigned long last_send = 0;
+
+  if ((last_send == 0) || (millis() - last_send >= SEND_INTERVAL)) {
+    last_send = millis();
+
+    float temperature = dht.readTemperature();
+    float humidity = dht.readHumidity();
+
+    LOG(L_INFO, "Current temperature [%f] degrees celcius\r\n", temperature);
+    LOG(L_INFO, "Current humidity [%f]\r\n", humidity);
+    char commandText[512];
+    snprintf(commandText, 512, "Current humidity [%4.2f] and current temp [%4.2f]", humidity, temperature);
+    sendCommand(commandText);
+  }
+
+  breakout->spin();
+
+  delay(LOOP_INTERVAL);
+}
+```
+
+This provides a good start for our sketch, and already provides us the code to log temperature and humidity, but not GPS. Luckily, there is another example that shows how to transmit GPS data. Let's open the GPS example and transfer some of the code to our Temperature/Humidity example.
+
+All of the code we need to modify our sketch is found in the loop() function, specifically:
+
+```C++
+gnss_data_t data;
+  breakout->getGNSSData(&data);
+
+  if (data.valid && ((last_send == 0) || (millis() - last_send >= SEND_INTERVAL))) {
+    last_send = millis();
+
+    if (data.valid) {
+      char commandText[512];
+      snprintf(commandText, 512, "Current Position:  %d %7.5f %s  %d %7.5f %s\r\n", data.position.latitude_degrees,
+          data.position.latitude_minutes, data.position.is_north ? "N" : "S", data.position.longitude_degrees,
+          data.position.longitude_minutes, data.position.is_west ? "W" : "E");
+      sendCommand(commandText);
+    }
+  }
+```
+
+Now we know how to get GNSS Data from the GPS antenna, and to access the coordinates held in that gnss_data_t object. With this code, we can write the the following lines to add to our stock sketch:
+
+```C++
+ gnss_data_t data;
+    breakout->getGNSSData(&data);
+    last_send = millis();
+    int deg_latitude = data.position.latitude_degrees;
+    int deg_longitude = data.position.longitude_degrees;
+    float min_latitude = data.position.latitude_minutes;
+    float min_longitude = data.position.longitude_minutes;
+    String north_south = data.position.is_north ? "N" : "S";
+    String east_west = data.position.is_west ? "W" : "E";
+```
+
+This collects all of the data needed to transmit to our tracker database, which we can send with the lines:
+
+```C++
+LOG(L_INFO, "GPS Location: [%d] degrees [%4.2f] minutes %s [%d] degrees [%7.5f] minutes %s \n", deg_latitude, min_latitude, north_south.c_str(), deg_longitude, min_longitude, east_west.c_str());
+    char commandText[512];
+    snprintf(commandText, 512, "{<hum>: %4.2f, <temp>: %4.2f, <deglat>: %d, <minlat>: %4.2f, <n_s>: <%s>, <deglong>: %d, <minlong>: %4.2f, <e_w>: <%s>}", humidity, temperature, deg_latitude, min_latitude, north_south.c_str(), deg_longitude, min_longitude, east_west.c_str());
+    breakout->sendTextCommand(commandText);
+```
+
+Specifically, let's look closer at the line.
+
+```C++
+#include <Seeed_ws2812.h>
+
+#include <BreakoutSDK.h>
+#include <board.h>
+#include<stdio.h>
+#include "DHT.h"
+
+static const char *device_purpose = "Monitor GPS and environmental factors for a shipment";
+
+static const char *psk_key ="e938f2a8c1ccd407cce1293cbc707f0b";
+
+Breakout *breakout = &Breakout::getInstance();
+
+#define SENSOR_PIN (D38)
+#define LOOP_INTERVAL (1 * 1000)
+#define SEND_INTERVAL (1 * 60 * 1000)
+#define DHTTYPE DHT11   // DHT 11
+
+DHT dht(SENSOR_PIN, DHTTYPE);
+
+/**
+ * light turning yellow to green
+ */
+WS2812 strip = WS2812(1, RGB_LED_PIN);
+
+void enableLed() {
+  pinMode(RGB_LED_PWR_PIN, OUTPUT);
+  digitalWrite(RGB_LED_PWR_PIN, HIGH);
+  strip.begin();
+  strip.brightness = 5;
+}
+
+void setup() {
+  // put your setup code here, to run once:
+  owl_log_set_level(L_INFO);
+  LOG(L_WARN, "Arduino setup() starting up\r\n");
+
+  enableLed();
+  //changes colors
+  strip.WS2812SetRGB(0, 0x20, 0x20, 0x00);
+  strip.WS2812Send();
+
+  breakout->setPurpose(device_purpose);
+  breakout->setPSKKey(psk_key);
+  breakout->setPollingInterval(1 * 60);  // Optional, by default set to 10 minutes
+
+  // Powering the modem and starting up the SDK
+  LOG(L_WARN, "Powering on module and registering...");
+  breakout->powerModuleOn();
+
+  LOG(L_WARN, "... done powering on and registering.\r\n");
+  LOG(L_WARN, "Arduino loop() starting up\r\n");
+
+}
+
+void sendCommand(const char * command) {
+  if (breakout->sendTextCommand(command) == COMMAND_STATUS_OK) {
+    LOG(L_INFO, "Tx-Command [%s]\r\n", command);
+    } else {
+      LOG(L_INFO, "Tx-Command ERROR\r\n");
+  }
+}
+
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  static unsigned long last_send = 0;
+
+  if ((last_send == 0) || (millis() - last_send >= SEND_INTERVAL)) {
+    gnss_data_t data;
+    breakout->getGNSSData(&data);
+    last_send = millis();
+    int deg_latitude = data.position.latitude_degrees;
+    int deg_longitude = data.position.longitude_degrees;
+    float min_latitude = data.position.latitude_minutes;
+    float min_longitude = data.position.longitude_minutes;
+    String north_south = data.position.is_north ? "N" : "S";
+    String east_west = data.position.is_west ? "W" : "E";
+    float temperature = dht.readTemperature();
+    float humidity = dht.readHumidity();
+
+    LOG(L_INFO, "Current temperature [%f] degrees celcius\r\n", temperature);
+    LOG(L_INFO, "Current humidity [%f]\r\n", humidity);
+    LOG(L_INFO, "GPS Location: [%d] degrees [%4.2f] minutes %s [%d] degrees [%7.5f] minutes %s \n", deg_latitude, min_latitude, north_south.c_str(), deg_longitude, min_longitude, east_west.c_str());
+    char commandText[512];
+    snprintf(commandText, 512, "{<hum>: %4.2f, <temp>: %4.2f, <deglat>: %d, <minlat>: %4.2f, <n_s>: <%s>, <deglong>: %d, <minlong>: %4.2f, <e_w>: <%s>}", humidity, temperature, deg_latitude, min_latitude, north_south.c_str(), deg_longitude, min_longitude, east_west.c_str());
+    breakout->sendTextCommand(commandText);
+  }
+
+  breakout->spin();
+
+  delay(LOOP_INTERVAL);
+}
+```
+
 ```C++
 #include <Seeed_ws2812.h>
 
