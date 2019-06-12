@@ -662,7 +662,12 @@ As you can see, our API services two types of HTTP request
 - /getEvents GET requests
   - Services requests from the client for a full list of TrackingEvents associated with a SIM ID.
 
-Finally, we need to build a couple of helper functions to parse and format our data. Here is the helpers.js code:
+Finally, we need to build a couple of helper functions to parse and format our data.
+
+- getDateTimeString() returns the current date and time in string format.
+- parseString() parses our DevKit data string and replaces the '<>' characters with '"'
+- convToDD() converts GPS locations from degrees:minutes format to decimal degrees.
+  Here is the helpers.js code:
 
 ```JavaScript
 function getDateTimeString() {
