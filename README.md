@@ -666,7 +666,7 @@ Finally, we need to build a couple of helper functions to parse and format our d
 
 - getDateTimeString() returns the current date and time in string format.
 - parseString() parses our DevKit data string and replaces the '<>' characters with '"'
-- convToDD() converts GPS locations from degrees:minutes format to decimal degrees.
+- convToDD() converts GPS locations from degrees:minutes format to decimal degrees.x
   Here is the helpers.js code:
 
 ```JavaScript
@@ -715,6 +715,150 @@ module.exports.convToDD = convToDD;
 ```
 
 ## 8. Build a front-end web app using create-react-app
+
+App.js
+
+```JavaScript
+import React, { Component } from "react";
+import "./App.css";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import TrackingTable from "./TrackingTable";
+import GraphView from "./GraphView";
+import Helmet from "react-helmet";
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      submitted: false,
+      SIMID: ""
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleChange(event) {
+    this.setState({ SIMID: event.target.value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    console.log(this.state.submitted);
+    this.setState({ submitted: true });
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <Helmet bodyAttributes={{ style: "background-color : #42f4e2" }} />
+        <Container-Fluid>
+          <Row>
+            <Col />
+            <Col>
+              <br />
+              <h1>Welcome to the NB-IoT ShipTracker!</h1>
+
+              <Form onSubmit={this.handleSubmit}>
+                <Form.Group
+                  controlId="formSIMID"
+                  value={this.state.value}
+                  onChange={this.handleChange}
+                >
+                  <Form.Label>
+                    Please enter your SIM ID below to track your shipment:
+                  </Form.Label>
+                  <Form.Control placeholder="SIM ID" />
+                </Form.Group>
+                <Button variant="primary" type="submit" size="lg">
+                  Track
+                </Button>
+              </Form>
+            </Col>
+            <Col />
+          </Row>
+          <br />
+          {this.state.submitted ? (
+            <div>
+              <h1> Tracking Data for SIM {this.state.SIMID} </h1>
+              <TrackingTable SIMID={this.state.SIMID} />
+              <GraphView SIMID={this.state.SIMID} />
+            </div>
+          ) : null}
+        </Container-Fluid>
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+
+TrackingLine.js
+
+```JavaScript
+import React, { Component } from "react";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Button from "react-bootstrap/Button";
+import Popover from "react-bootstrap/Popover";
+import MapView from "./MapView";
+import "./App.css";
+
+class TrackingLine extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      eventID: this.props.eventID,
+      eventTime: this.props.eventTime,
+      temperature: this.props.temperature,
+      humidity: this.props.humidity,
+      latitude: this.props.latitude,
+      northSouth: this.props.isNorth ? "N" : "S",
+      longitude: this.props.longitude,
+      eastWest: this.props.isWest ? "W" : "E",
+      showMap: false
+    };
+  }
+
+  render() {
+    return (
+      <tr>
+        <th scope="row">{this.state.eventID}</th>
+        <td>{this.state.eventTime}</td>
+        <td>{this.state.temperature}</td>
+        <td>{this.state.humidity}</td>
+        <td>{this.state.latitude}</td>
+        <td>{this.state.northSouth}</td>
+        <td>{this.state.longitude}</td>
+        <td>{this.state.eastWest}</td>
+        <td>{MapsPopout(this.state.latitude, this.state.longitude)}</td>
+      </tr>
+    );
+  }
+}
+
+const MapsPopout = (lat, lng) => (
+  <div className="maps-popout">
+    <OverlayTrigger
+      trigger="click"
+      placement="left"
+      overlay={popover(lat, lng)}
+    >
+      <Button variant="success">Map</Button>
+    </OverlayTrigger>
+  </div>
+);
+
+const popover = (lat, lng) => (
+  <Popover id="popover-basic" title="Tracking Location">
+    <MapView latitude={lat} longitude={lng} />
+  </Popover>
+);
+
+export default TrackingLine;
+```
 
 ## 9. Add Google Maps API integration
 
