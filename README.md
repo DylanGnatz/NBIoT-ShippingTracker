@@ -41,9 +41,19 @@ To demonstrate this concept, let's build our own full-stack prototype of a NB-Io
 
 ## 1. Configure the DevKit and Arduino IDE
 
-For a detailed tutorial on how to setup your NB-IoT DevKit and Arduino environment , check out [this guide](https://www.twilio.com/blog/pioneer-nb-iot-with-twilios-alfa-development-kit)
+For a detailed tutorial on how to setup your NB-IoT DevKit and Arduino environment , check out [this guide](https://www.twilio.com/blog/pioneer-nb-iot-with-twilios-alfa-development-kit).
 
-Remove the components from your DevKit. Attach the lithium battery, temperature/humidity sensor, LTE antenna, GPS antenna, and micro USB cable to the board.
+Remove the components from your DevKit. Attach the lithium battery, temperature/humidity sensor, LTE antenna, GPS antenna, and micro USB cable to the board. Connect the board to your computer with the mico USB cable.
+
+Download the [Breakout Arduino SDK from GitHub](https://www.twilio.com/blog/pioneer-nb-iot-with-twilios-alfa-development-kit) and add it as a .zip library in the Arduino IDE.
+
+In the IDE, navigate to Arduino -> Preferences and paste the following URL in the field called "Additional Board Manager URLS."
+
+https://raw.githubusercontent.com/Seeed-Studio/Seeed_Platform/master/package_seeeduino_boards_index.json
+
+Navigate to Tools -> Board -> Boards Manager and install the board manager "Seeed STM32F4 Boards version 1.2.3+".
+
+Select the appropriate board and port from the Tools menu. The board is called "Wio Tracker LTE".
 
 ## 2. Register the narrowband SIM with Twilio
 
