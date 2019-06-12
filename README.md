@@ -966,8 +966,12 @@ export class MapView extends Component {
 export default GoogleApiWrapper({
   apiKey: API_KEY
 })(MapView);
+```
 
 ## 10. Deploy server to Azure
 
 ## 11. Deploy Client to Azure
+
+```
+
 ```
