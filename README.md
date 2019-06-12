@@ -310,6 +310,14 @@ void loop() {
 }
 ```
 
+Now we can check if our sketch is working correctly. While connected by USB to your computer, press and hold the BOOT0 button, then press and release the RST button, and finally release the BOOT0 button. Your DevKit is now in bootloader mode, allowing you to upload your sketch to it. In the Arduino IDE, press the Upload arrow. In the console, you should see the progress of downloading the sketch onto the board. Once the console prints "File downloaded successfully", you can press the RST button on the DevKit to begin running the sketch.
+
+Open the serial monitor to view the logs from the DevKit. It will likely take a few minutes to connect and register with the Narrowband network, but once it does, the DevKit will begin logging and transmitting its environmental data.
+
+To see if your DevKit is transmitting data to Twilio, navigate to Wireless SIM Cards on your Twilio Dashboard. Click on the SIM card you registered earlier and open the "Commands" tab. You should see a list of commands sent by the DevKit, which is polling once each minute. We're now officially transmitting data via Narrowband! Pretty cool, right?
+
+Now that your DevKit is up and running, let's build the rest of our infrastructure.
+
 ## 4. Deploy a MSSQL cloud database to Azure
 
 ## 5. Create a database schema for storing the device commands
