@@ -192,7 +192,13 @@ LOG(L_INFO, "GPS Location: [%d] degrees [%4.2f] minutes %s [%d] degrees [%7.5f] 
     breakout->sendTextCommand(commandText);
 ```
 
-Specifically, let's look closer at the line.
+Specifically, let's look closer at the line:
+
+```C++
+ snprintf(commandText, 512, "{<hum>: %4.2f, <temp>: %4.2f, <deglat>: %d, <minlat>: %4.2f, <n_s>: <%s>, <deglong>: %d, <minlong>: %4.2f, <e_w>: <%s>}", humidity, temperature, deg_latitude, min_latitude, north_south.c_str(), deg_longitude, min_longitude, east_west.c_str());
+```
+
+This line formats our command buffer to send our data to Twilio. Eventually, our data is going to be sent via webhook to a back-end Node.js server to be inserted into our SQL database. As such, we want to format our data in a way that it can be easily parsed in JavaScript. The easiest way to do this is to format our data so that it resembles JSON formatting. The only difference between the above formatting and a JSON is that instead of encasing our key strings in ' " ' characters, we have encased them in "<" and ">". This is because C++ interprets the ' " ' character as the end of a string, unless an escape character ' \ ' is used, but we would prefer not to embed our command with a ton of extra escape characters that the server will need to parse out. So, we use "<>" as stand ins for quotes, and our Node server can easily reformat the string by replacing these characters with quotes later on. More on that later.
 
 ```C++
 #include <Seeed_ws2812.h>
