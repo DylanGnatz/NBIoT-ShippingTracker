@@ -320,6 +320,12 @@ Now that your DevKit is up and running, let's build the rest of our infrastructu
 
 ## 4. Deploy a MSSQL cloud database to Azure
 
+We'll start by deploying a cloud SQL database to Azure, which we can use to store our tracking data.
+
+On the Azure portal, click "SQL databases" under the Azure services header. Click add to create a new database. Create a resource group, enter a database name, and create a new server.
+
+Since we are only building a prototype, we can configure the database to use minimal DTUs and storage. Click "configure" and select the "basic" tab. Click "Apply." Navigate to "Review + Create", and click "Create" to Deploy your database. You now have an empty SQL database deployed to the cloud!
+
 ## 5. Create a database schema for storing the device commands
 
 ## 6. Use Sequelize to build insert/update functions for database interface
