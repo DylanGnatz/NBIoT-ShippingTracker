@@ -581,7 +581,10 @@ Now that we have the necessary functions to work with our database, we can begin
 
 First, let's install our dependencies using npm:
 
-- [Express](https://expressjs.com/) (the web app framework we will use for our API) -`npm install express`
+- [Express](https://expressjs.com/) (the web app framework we will use for our API requests)
+
+  -`npm install express`
+
 - [bodyParser](https://www.npmjs.com/package/body-parser) (allows us to parse the body of HTTP requests to our server)
   - `npm install body-parser`
 - [uuid](https://www.npmjs.com/package/uuid) (a utility we will use to generate custom event IDs to serve as primary keys for each tracking event)
