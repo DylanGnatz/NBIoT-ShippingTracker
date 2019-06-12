@@ -378,7 +378,202 @@ sequelize
   });
 ```
 
+We now have a working connection to our cloud database, but our database has no tables or data. Let's define the database schema. Our project is simple and will only require one table, TrackingEvents:
+
+```JavaScript
+const TrackingEvent = sequelize.define(
+  "TrackingEvent",
+  {
+    // attributes
+    EventID: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    EventTime: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    SIMID: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    Temperature: {
+      type: Sequelize.FLOAT,
+      allowNull: false
+    },
+    Humidity: {
+      type: Sequelize.FLOAT,
+      allowNull: false
+    },
+    Latitude: {
+      type: Sequelize.FLOAT,
+      allowNull: false
+    },
+    IsNorth: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false
+    },
+    Longitude: {
+      type: Sequelize.FLOAT,
+      allowNull: false
+    },
+    IsWest: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false
+    }
+  },
+  {}
+);
+```
+
+We have successfully defined what our table will look like, but it won't actually exist in our database until we create an insert method. Let's get on with it!
+
 ## 6. Use Sequelize to build insert/update functions for database interface
+
+Next, we build an insert function for our database:
+
+```JavaScript
+function addEvent(EID, ET, SIM, temp, hum, lat, IN, long, IW) {
+  TrackingEvent.sync({}).then(() => {
+    TrackingEvent.create({
+      EventID: EID,
+      EventTime: ET,
+      SIMID: SIM,
+      Temperature: temp,
+      Humidity: hum,
+      Latitude: lat,
+      IsNorth: IN,
+      Longitude: long,
+      IsWest: IW
+    });
+  });
+}
+```
+
+This function will take all of our data parameters as input, and create a new TrackingEvent in the TrackingEvents table.
+
+Finally, we need a query function to return our tracking data when our client queries by SIM ID, so we add:
+
+```JavaScript
+function getEventsBySIM(SIM) {
+  return TrackingEvent.findAll({
+    where: {
+      SIMID: SIM
+    },
+    order: [["updatedAt", "DESC"]]
+  });
+}
+```
+
+This will return a list of events, most recent first, as we would like to display them on our web app.
+
+Our final database functions code looks like:
+
+```JavaScript
+const Sequelize = require("sequelize");
+
+//DB Connection info
+const DB_UNAME = "xxxxx";
+const DB_PASS = "xxxxx";
+const DB_SERV = "xxxxx";
+const DB_NAME = "xxxxx";
+
+const sequelize = new Sequelize(DB_NAME, DB_UNAME, DB_PASS, {
+  host: DB_SERV,
+  dialect: "mssql",
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
+  },
+  dialectOptions: {
+    options: {
+      encrypt: true
+    }
+  }
+});
+
+const TrackingEvent = sequelize.define(
+  "TrackingEvent",
+  {
+    // attributes
+    EventID: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    EventTime: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    SIMID: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    Temperature: {
+      type: Sequelize.FLOAT,
+      allowNull: false
+    },
+    Humidity: {
+      type: Sequelize.FLOAT,
+      allowNull: false
+    },
+    Latitude: {
+      type: Sequelize.FLOAT,
+      allowNull: false
+    },
+    IsNorth: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false
+    },
+    Longitude: {
+      type: Sequelize.FLOAT,
+      allowNull: false
+    },
+    IsWest: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false
+    }
+  },
+  {}
+);
+
+function addEvent(EID, ET, SIM, temp, hum, lat, IN, long, IW) {
+  TrackingEvent.sync({}).then(() => {
+    TrackingEvent.create({
+      EventID: EID,
+      EventTime: ET,
+      SIMID: SIM,
+      Temperature: temp,
+      Humidity: hum,
+      Latitude: lat,
+      IsNorth: IN,
+      Longitude: long,
+      IsWest: IW
+    });
+  });
+}
+
+function getEventsBySIM(SIM) {
+  return TrackingEvent.findAll({
+    where: {
+      SIMID: SIM
+    },
+    order: [["updatedAt", "DESC"]]
+  });
+}
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Connection has been established successfully.");
+  })
+  .catch(err => {
+    console.error("Unable to connect to the database:", err);
+  });
+
+module.exports.addEvent = addEvent;
+module.exports.getEventsBySIM = getEventsBySIM;
+```
 
 ## 7. Write a back-end server API with Node and Express
 
