@@ -3,7 +3,6 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Button from "react-bootstrap/Button";
 import Popover from "react-bootstrap/Popover";
 import MapView from "./MapView";
-import Container from "react-bootstrap/Container";
 import "./App.css";
 
 class TrackingLine extends Component {

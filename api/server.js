@@ -1,4 +1,3 @@
-const db_functions = require("./db_functions");
 const db_sequelize = require("./db_sequelize");
 const helpers = require("./helpers");
 const uuid = require("uuid");

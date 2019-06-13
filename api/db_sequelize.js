@@ -1,4 +1,3 @@
-const tedious = require("tedious");
 const Sequelize = require("sequelize");
 
 //DB Connection info
@@ -6,7 +5,6 @@ const DB_UNAME = "xxxxx";
 const DB_PASS = "xxxxx";
 const DB_SERV = "xxxxx";
 const DB_NAME = "xxxxx";
-const TABLE_NAME = "xxxxx";
 
 const sequelize = new Sequelize(DB_NAME, DB_UNAME, DB_PASS, {
   host: DB_SERV,
