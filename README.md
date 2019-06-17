@@ -716,6 +716,14 @@ module.exports.convToDD = convToDD;
 
 ## 8. Build a front-end web app using create-react-app
 
+Now let's build a simple, single page web app in React that renders our tracking data when we enter a SIM ID.
+
+We'll use create-react-app to build the skeleton for our app, without having to manually create a build configuration:
+
+```
+npx create-react-app
+```
+
 App.js
 
 ```JavaScript
