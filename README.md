@@ -718,13 +718,20 @@ module.exports.convToDD = convToDD;
 
 Now let's build a simple, single page web app in React that renders our tracking data when we enter a SIM ID.
 
+We'll need a few npm packages for our app, so run the following scripts:
+
+```
+npm install react-bootstrap bootstrap
+npm install react-helmet
+```
+
 We'll use create-react-app to build the skeleton for our app, without having to manually create a build configuration:
 
 ```
 npx create-react-app
 ```
 
-App.js
+Here is our main app component, which contains all of the render logic for other components on the site. It renders an input box where the user can type in a SIM ID, and on submit it queries the database for records with that SIM and renders them in a table.
 
 ```JavaScript
 import React, { Component } from "react";
