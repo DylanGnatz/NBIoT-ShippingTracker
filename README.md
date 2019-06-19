@@ -811,6 +811,8 @@ class App extends Component {
 export default App;
 ```
 
+This component holds the events table, which makes a request to our API based on the SIM ID the user has entered, and renders a line in the table for each event.
+
 TrackingTable.js
 
 ```JavaScript
