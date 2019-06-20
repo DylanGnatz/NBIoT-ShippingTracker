@@ -12,7 +12,8 @@
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
     "react-scripts": "3.0.1",
-    "react-vis": "^1.11.7"
+    "react-vis": "^1.11.7",
+    "sass": "^1.21.0"
   },
   "scripts": {
     "start": "react-scripts start",

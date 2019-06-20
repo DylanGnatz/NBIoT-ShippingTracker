@@ -1,4 +1,5 @@
 import React from "react";
+import "/Users/dylangnatz/Coding_Projects/TmobileIoT/shiptracker/client/node_modules/react-vis/dist/style.css";
 import {
   XYPlot,
   XAxis,
@@ -10,11 +11,11 @@ import {
 
 const Chart = props => {
   const dataArr = props.data.map(d => {
-    return { x: d.Humidity, y: d.Temperature };
+    return { x: new Date(d.EventTime), y: d.Temperature };
   });
 
   return (
-    <XYPlot xType="time" width={300} height={300}>
+    <XYPlot xType="time" width={1200} height={1200}>
       <HorizontalGridLines />
       <VerticalGridLines />
       <XAxis title="Time" />
