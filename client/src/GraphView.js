@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { XYPlot, LineSeries } from "react-vis";
 import Chart from "./Chart";
+import HumChart from "./HumChart.js";
 import axios from "axios";
 
 class GraphView extends Component {
@@ -25,6 +26,7 @@ class GraphView extends Component {
     return (
       <div className="App">
         {this.state.renderGraph ? <Chart data={this.state.events} /> : null}
+        {this.state.renderGraph ? <HumChart data={this.state.events} /> : null}
       </div>
     );
   }
