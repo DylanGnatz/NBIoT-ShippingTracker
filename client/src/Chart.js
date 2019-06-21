@@ -15,12 +15,26 @@ const Chart = props => {
   });
 
   return (
-    <XYPlot xType="time" width={1200} height={1200}>
+    <XYPlot xType="time" width={1800} height={1200}>
       <HorizontalGridLines />
       <VerticalGridLines />
-      <XAxis title="Time" />
-      <YAxis title="Temperature" />
-      <LineSeries data={dataArr} style={{ stroke: "violet", strokeWidth: 3 }} />
+      <XAxis
+        title="Time"
+        style={{
+          line: { stroke: "#ADDDE1" },
+          ticks: { stroke: "#ADDDE1" },
+          text: { stroke: "#ffffff", fill: "#ffffff", fontWeight: 1200 }
+        }}
+      />
+      <YAxis
+        title="Temperature"
+        style={{
+          line: { stroke: "#ADDDE1" },
+          ticks: { stroke: "#ADDDE1" },
+          text: { stroke: "#ffffff", fill: "#ffffff", fontWeight: 1200 }
+        }}
+      />
+      <LineSeries data={dataArr} style={{ stroke: "black", strokeWidth: 5 }} />
     </XYPlot>
   );
 };

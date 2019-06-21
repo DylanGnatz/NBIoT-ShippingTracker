@@ -4,6 +4,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Tabs from "react-bootstrap/Tabs";
+import Tab from "react-bootstrap/Tab";
 import TrackingTable from "./TrackingTable";
 import GraphView from "./GraphView";
 import Helmet from "react-helmet";
@@ -61,9 +63,24 @@ class App extends Component {
           <br />
           {this.state.submitted ? (
             <div>
-              <h1> Tracking Data for SIM {this.state.SIMID} </h1>
-              <TrackingTable SIMID={this.state.SIMID} />
-              <GraphView SIMID={this.state.SIMID} />
+              <Tabs
+                id="controlled-tab-example"
+                activeKey={this.state.key}
+                onSelect={key => this.setState({ key })}
+              >
+                <Tab eventKey="eventtable" title="Event Table">
+                  <h1> Tracking Data for SIM: {this.state.SIMID} </h1>
+                  <TrackingTable SIMID={this.state.SIMID} />
+                </Tab>
+                <Tab eventKey="graph" title="Graph View">
+                  <h1>
+                    {" "}
+                    Temperature and Humidity Over Time for SIM:{" "}
+                    {this.state.SIMID}{" "}
+                  </h1>
+                  <GraphView SIMID={this.state.SIMID} />
+                </Tab>
+              </Tabs>
             </div>
           ) : null}
         </Container-Fluid>
@@ -73,3 +90,8 @@ class App extends Component {
 }
 
 export default App;
+/*
+<h1> Tracking Data for SIM {this.state.SIMID} </h1>
+              <TrackingTable SIMID={this.state.SIMID} />
+              <GraphView SIMID={this.state.SIMID} />
+*/
