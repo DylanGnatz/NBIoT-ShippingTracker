@@ -33,8 +33,8 @@ function parseString(inStr) {
   return outStr;
 }
 
-function convToDD(deg, min) {
-  return deg + min / 60;
+function convToDD(deg, min, sign) {
+  return (deg + min / 60) * sign;
 }
 
 module.exports.getDateTimeString = getDateTimeString;
