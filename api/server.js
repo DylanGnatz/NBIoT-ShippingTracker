@@ -24,10 +24,10 @@ app.post("/fromSIM", function(req, res) {
   let SIM = req.body.SimSid;
   let temp = obj.temp;
   let hum = obj.hum;
-  let lat = helpers.convToDD(obj.deglat, obj.minlat);
-  let long = helpers.convToDD(obj.deglong, obj.minlong);
-  let n_s = obj.n_s == "N" ? 1 : 0;
-  let e_w = obj.e_w == "W" ? 1 : 0;
+  let n_s = obj.n_s == "N" ? 1 : -1;
+  let e_w = obj.e_w == "E" ? 1 : -1;
+  let lat = helpers.convToDD(obj.deglat, obj.minlat, n_s);
+  let long = helpers.convToDD(obj.deglong, obj.minlong, e_w);
 
   let result = db_sequelize.addEvent(
     EID,
