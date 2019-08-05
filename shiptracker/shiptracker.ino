@@ -7,7 +7,7 @@
 
 static const char *device_purpose = "Monitor GPS and environmental factors for a shipment";
 
-static const char *psk_key ="xxxxxx";
+static const char *psk_key ="6a0233053c533a0802833eb11519268f";
 
 Breakout *breakout = &Breakout::getInstance();
 
