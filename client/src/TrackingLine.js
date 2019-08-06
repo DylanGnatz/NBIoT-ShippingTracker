@@ -14,9 +14,7 @@ class TrackingLine extends Component {
       temperature: this.props.temperature,
       humidity: this.props.humidity,
       latitude: this.props.latitude,
-      northSouth: this.props.isNorth ? "N" : "S",
       longitude: this.props.longitude,
-      eastWest: this.props.isWest ? "W" : "E",
       showMap: false
     };
   }
@@ -29,9 +27,7 @@ class TrackingLine extends Component {
         <td>{this.state.temperature}</td>
         <td>{this.state.humidity}</td>
         <td>{this.state.latitude}</td>
-        <td>{this.state.northSouth}</td>
         <td>{this.state.longitude}</td>
-        <td>{this.state.eastWest}</td>
         <td>{MapsPopout(this.state.latitude, this.state.longitude)}</td>
       </tr>
     );

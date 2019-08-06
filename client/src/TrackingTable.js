@@ -30,9 +30,7 @@ class TrackingTable extends Component {
             <th scope="col">Temperature</th>
             <th scope="col">Humidity</th>
             <th scope="col">Latitude</th>
-            <th scope="col">North/South</th>
             <th scope="col">Longitude</th>
-            <th scope="col">East/West</th>
             <th scope="col">View on Google Maps</th>
           </tr>
         </thead>
@@ -45,9 +43,7 @@ class TrackingTable extends Component {
               temperature={line.Temperature}
               humidity={line.Humidity}
               latitude={line.Latitude}
-              northSouth={line.NorthSouth}
               longitude={line.Longitude}
-              eastWest={line.EastWest}
             />
           ))}
         </tbody>
